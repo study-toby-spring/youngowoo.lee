@@ -3,10 +3,8 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/c"
          xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
-
          version="3.1">
 
   <display-name>Archetype Created Web Application</display-name>
@@ -14,7 +12,7 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
-  <context-param>
+  <context-param>r
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath:/application-context.xml</param-value>
   </context-param>

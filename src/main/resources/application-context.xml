@@ -12,4 +12,11 @@
                 expression="org.springframework.stereotype.Controller"/>
 
     </context:component-scan>
+
+    <bean id="idGenerator" class="java.util.Random"/>
+    <bean id="helloFactory" class="com.zum.study.util.HelloFactory">
+        <property name="random" ref="idGenerator"/>
+    </bean>
+
+    <context:annotation-config/>
 </beans>
