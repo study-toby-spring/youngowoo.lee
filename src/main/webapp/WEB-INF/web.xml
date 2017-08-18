@@ -18,6 +18,7 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath:/application-context.xml</param-value>
   </context-param>
+
   <servlet>
     <servlet-name>dispatcher</servlet-name>
     <!-- DispatcherServlet : 요청을 리다이렉트 -->
@@ -29,7 +30,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>dispatcher</servlet-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/</url-pattern>
   </servlet-mapping>
   <filter>
     <filter-name>encodingFilter</filter-name>
@@ -47,5 +48,13 @@
     <filter-name>encodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+
+  <!--<jsp-config>-->
+    <!--<jsp-property-group>-->
+      <!--<url-pattern>/jsp/*</url-pattern>-->
+      <!--<el-ignored>false</el-ignored>-->
+    <!--</jsp-property-group>-->
+  <!--</jsp-config>-->
+
 
 </web-app>

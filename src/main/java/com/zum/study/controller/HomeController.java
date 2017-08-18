@@ -1,6 +1,7 @@
 package com.zum.study.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,10 +12,12 @@ import org.springframework.web.bind.annotation.*;
 public class HomeController {
 
     @RequestMapping(value = "/hello", method = {RequestMethod.POST, RequestMethod.GET} )
-    @ResponseBody
-    public String hello(@RequestParam("id") int id) {
-        int i= 1;
-        return String.format(id+ "- hello");
+//    @ResponseBody
+    public String hello(Model model) {
+
+        model.addAttribute("title", "Hello :)");
+
+        return "hello";
     }
 
 }
