@@ -13,17 +13,17 @@ public class Program {
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
-        UserDao dao = new ZumUserDao();
+        UserDao dao = new UserDao();
 
         User user = new User();
 
-        user.setId("hello2");
+        user.setId("hello3");
         user.setName("young woo lee");
         user.setPassword("password");
 
         dao.add(user);
 
-        User found = dao.get("hello2");
+        User found = dao.get("hello3");
 
         System.out.println("name : " + found.getName());
         System.out.println("password : " + found.getPassword());
