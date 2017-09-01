@@ -1,5 +1,7 @@
 package com.zum.study.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -10,11 +12,15 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class HomeController {
 
+    Logger logger = LoggerFactory.getLogger(HomeController.class);
+
+
     @RequestMapping(value = "/hello", method = {RequestMethod.POST, RequestMethod.GET} )
     @ResponseBody
-    public String hello(@RequestParam("id") int id) {
+    public String hello(@RequestParam("hi") String message) {
         int i= 1;
-        return String.format(id+ "- hello");
+        logger.info("Hi : {}", message);
+        return String.format(message + "- hello");
     }
 
 }
