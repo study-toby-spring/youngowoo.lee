@@ -13,9 +13,9 @@ public class UserDao {
 
     private Connector connector;
 
-    public UserDao() {
+    public UserDao(Connector connector) {
 
-        this.connector = new NaverConnector();
+        this.connector = connector;
     }
 
     public void add(User user) throws ClassNotFoundException, SQLException {
