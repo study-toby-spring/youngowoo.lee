@@ -1,6 +1,7 @@
 package com.zum.study.program;
 
 import com.zum.study.domain.User;
+import com.zum.study.factory.DaoFactory;
 import com.zum.study.repository.UserDao;
 import com.zum.study.support.Connector;
 import com.zum.study.support.impl.NaverConnector;
@@ -14,18 +15,22 @@ public class Program {
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
-        Connector connector = new NaverConnector();
-        UserDao dao = new UserDao(connector);
+
+        DaoFactory daoFactory = new DaoFactory();
+
+        UserDao dao = daoFactory.userDao();
+//        Connector connector = new NaverConnector();
+//        UserDao dao = new UserDao(connector);
 
         User user = new User();
 
-        user.setId("hello4");
+        user.setId("hello5");
         user.setName("young woo lee");
         user.setPassword("password");
 
         dao.add(user);
 
-        User found = dao.get("hello4");
+        User found = dao.get("hello5");
 
         System.out.println("name : " + found.getName());
         System.out.println("password : " + found.getPassword());
