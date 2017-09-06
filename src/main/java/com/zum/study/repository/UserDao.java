@@ -1,29 +1,31 @@
 package com.zum.study.repository;
 
 import com.zum.study.domain.User;
-import com.zum.study.support.Connector;
-import com.zum.study.support.impl.NaverConnector;
 
-import java.sql.*;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Created by Joeylee on 2017-09-01.
  */
 public class UserDao {
 
-    private Connector connector;
+    private DataSource dataSource;
 
-    public Connector getConnector() {
-        return this.connector;
+    public DataSource getDataSource() {
+        return this.dataSource;
     }
 
-    public void setConnector(Connector connector) {
-        this.connector = connector;
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     public void add(User user) throws ClassNotFoundException, SQLException {
 
-        Connection connection = connector.createConnection();
+        Connection connection = dataSource.getConnection();
 
         PreparedStatement preparedStatement = connection.prepareStatement("insert into users (id, name, password) values (?, ?, ?)");
 
@@ -39,7 +41,7 @@ public class UserDao {
 
     public User get(String id) throws ClassNotFoundException, SQLException {
 
-        Connection connection = connector.createConnection();
+        Connection connection = dataSource.getConnection();
 
         PreparedStatement preparedStatement = connection.prepareStatement("select * from users where id = ?");
         preparedStatement.setString(1, id);
