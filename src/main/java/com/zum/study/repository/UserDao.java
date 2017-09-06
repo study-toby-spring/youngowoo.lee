@@ -1,6 +1,8 @@
 package com.zum.study.repository;
 
 import com.zum.study.domain.User;
+import com.zum.study.strategy.base.Statement;
+import com.zum.study.strategy.impl.DeleteAllStatement;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -114,6 +116,12 @@ public class UserDao {
 
     public void deleteAll() throws SQLException {
 
+        Statement statement = new DeleteAllStatement();
+        jdbcContextWithStatement(statement);
+
+    }
+    private void jdbcContextWithStatement(Statement statement) throws SQLException {
+
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -121,11 +129,10 @@ public class UserDao {
 
             connection = dataSource.getConnection();
 
-            preparedStatement = connection.prepareStatement("delete * from users");
+            preparedStatement = statement.getPreparedStatement(connection);
             preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
-
             throw e;
         }
         finally {
@@ -149,5 +156,6 @@ public class UserDao {
             }
         }
     }
+
 }
 
