@@ -13,8 +13,11 @@ public class UserDao {
 
     private Connector connector;
 
-    public UserDao(Connector connector) {
+    public Connector getConnector() {
+        return this.connector;
+    }
 
+    public void setConnector(Connector connector) {
         this.connector = connector;
     }
 
