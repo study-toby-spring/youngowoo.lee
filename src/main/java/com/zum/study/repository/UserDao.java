@@ -118,15 +118,19 @@ public class UserDao {
 
     public void deleteAll() throws SQLException {
 
+        executeSql("delete * from users");
+
+    }
+
+    private void executeSql(final String query) throws SQLException {
 
         jdbcContext.workWithStatement(new Statement() {
 
             public PreparedStatement getPreparedStatement(Connection connection) throws SQLException {
 
-                return connection.prepareStatement("delete * from users");
+                return connection.prepareStatement(query);
             }
         });
-
     }
 
 }
