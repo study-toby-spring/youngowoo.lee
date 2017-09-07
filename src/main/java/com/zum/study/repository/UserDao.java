@@ -1,9 +1,7 @@
 package com.zum.study.repository;
 
 import com.zum.study.domain.User;
-import com.zum.study.strategy.base.Statement;
-import com.zum.study.strategy.impl.AddStatement;
-import com.zum.study.strategy.impl.DeleteAllStatement;
+import com.zum.study.strategy.Statement;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -27,6 +25,27 @@ public class UserDao {
     }
 
     public void add(User user)  throws SQLException {
+
+        class AddStatement implements Statement {
+
+            private User user;
+
+            public AddStatement(User user) {
+
+                this.user = user;
+            }
+
+            public PreparedStatement getPreparedStatement(Connection connection) throws SQLException {
+
+                PreparedStatement preparedStatement = connection.prepareStatement("insert into users (id, name, password) values (?, ?, ?)");
+
+                preparedStatement.setString(1, user.getId());
+                preparedStatement.setString(2, user.getName());
+                preparedStatement.setString(3, user.getPassword());
+
+                return preparedStatement;
+            }
+        }
 
         Statement statement = new AddStatement(user);
         jdbcContextWithStatement(statement);
@@ -106,6 +125,15 @@ public class UserDao {
     }
 
     public void deleteAll() throws SQLException {
+
+
+        class DeleteAllStatement implements Statement {
+
+            public PreparedStatement getPreparedStatement(Connection connection) throws SQLException {
+
+                return connection.prepareStatement("delete * from users");
+            }
+        }
 
         Statement statement = new DeleteAllStatement();
         jdbcContextWithStatement(statement);
