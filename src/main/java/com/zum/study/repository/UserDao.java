@@ -2,6 +2,7 @@ package com.zum.study.repository;
 
 import com.zum.study.domain.User;
 import com.zum.study.strategy.base.Statement;
+import com.zum.study.strategy.impl.AddStatement;
 import com.zum.study.strategy.impl.DeleteAllStatement;
 
 import javax.sql.DataSource;
@@ -27,18 +28,8 @@ public class UserDao {
 
     public void add(User user)  throws SQLException {
 
-        Connection connection = dataSource.getConnection();
-
-        PreparedStatement preparedStatement = connection.prepareStatement("insert into users (id, name, password) values (?, ?, ?)");
-
-        preparedStatement.setString(1, user.getId());
-        preparedStatement.setString(2, user.getName());
-        preparedStatement.setString(3, user.getPassword());
-
-        preparedStatement.executeUpdate();
-
-        preparedStatement.close();
-        connection.close();
+        Statement statement = new AddStatement(user);
+        jdbcContextWithStatement(statement);
     }
 
     public User get(String id) throws SQLException {
