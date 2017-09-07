@@ -24,16 +24,9 @@ public class UserDao {
         this.dataSource = dataSource;
     }
 
-    public void add(User user)  throws SQLException {
+    public void add(final User user) throws SQLException {
 
         class AddStatement implements Statement {
-
-            private User user;
-
-            public AddStatement(User user) {
-
-                this.user = user;
-            }
 
             public PreparedStatement getPreparedStatement(Connection connection) throws SQLException {
 
@@ -47,7 +40,7 @@ public class UserDao {
             }
         }
 
-        Statement statement = new AddStatement(user);
+        Statement statement = new AddStatement();
         jdbcContextWithStatement(statement);
     }
 
