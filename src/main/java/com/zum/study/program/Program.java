@@ -21,13 +21,13 @@ public class Program {
 
         User user = new User();
 
-        user.setId("hello17");
+        user.setId("hello18");
         user.setName("young woo lee");
         user.setPassword("password");
 
         dao.add(user);
 
-        User found = dao.get("hello17");
+        User found = dao.get("hello18");
 
         System.out.println("name : " + found.getName());
         System.out.println("password : " + found.getPassword());
