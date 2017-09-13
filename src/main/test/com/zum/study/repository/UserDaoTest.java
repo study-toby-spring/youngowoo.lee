@@ -32,20 +32,9 @@ public class UserDaoTest {
 
         users = new ArrayList<User>();
 
-        users.add(create("1", "joeylee", "123"));
-        users.add(create("2", "youngwoo", "456"));
-        users.add(create("3", "woo", "789"));
-    }
-
-    private User create(String id, String name, String password) {
-
-        User user = new User();
-
-        user.setId(id);
-        user.setName(name);
-        user.setPassword(password);
-
-        return user;
+        users.add(new User("1", "joeylee", "123", Level.BASIC, 1, 0));
+        users.add(new User("2", "youngwoo", "456", Level.SILVER, 55, 10));
+        users.add(new User("3", "woo", "789", Level.GOLD, 100, 40));
     }
 
     @Test
@@ -94,5 +83,8 @@ public class UserDaoTest {
         assertThat(user1.getId(), is(user2.getId()));
         assertThat(user1.getName(), is(user2.getName()));
         assertThat(user1.getPassword(), is(user2.getPassword()));
+        assertThat(user1.getLevel(), is(user2.getLevel()));
+        assertThat(user1.getLogin(), is(user2.getLogin()));
+        assertThat(user1.getRecommend(), is(user2.getRecommend()));
     }
 }
