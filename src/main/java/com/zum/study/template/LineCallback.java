@@ -3,7 +3,7 @@ package com.zum.study.template;
 /**
  * Created by Joeylee on 2017-09-13.
  */
-public interface LineCallback {
+public interface LineCallback<T> {
 
-    Integer doSomethingWithLine(String line, Integer value);
+    T doSomethingWithLine(String line, T value);
 }
