@@ -26,4 +26,6 @@ public interface UserDao {
 
     int getCount();
     void deleteAll();
+
+    void update(User user);
 }
