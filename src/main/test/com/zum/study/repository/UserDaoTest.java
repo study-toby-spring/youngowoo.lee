@@ -21,6 +21,10 @@ public class UserDaoTest {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private DataSource dataSource;
+
+
     private List<User> users;
 
     @Before
@@ -42,6 +46,25 @@ public class UserDaoTest {
         user.setPassword(password);
 
         return user;
+    }
+
+    @Test
+    public void duplicatedUserScenario() {
+
+        User user = users.get(0);
+
+        try {
+
+            userDao.add(user);
+            userDao.add(user);
+        }
+        catch (DuplicateKeyException e) {
+
+            SQLException exception = (SQLException) e.getRootCause();
+            SQLExceptionTranslator set = new SQLErrorCodeSQLExceptionTranslator(dataSource);
+
+            assertThat(set.translate(null, null, exception) instanceof DuplicateKeyException, is(true));
+        }
     }
 
     @Test

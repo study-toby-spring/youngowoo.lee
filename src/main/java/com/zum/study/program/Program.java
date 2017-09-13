@@ -2,6 +2,7 @@ package com.zum.study.program;
 
 import com.zum.study.domain.User;
 import com.zum.study.repository.UserDao;
+import com.zum.study.repository.UserDaoJdbc;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -16,7 +17,7 @@ public class Program {
 
 
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/context/application-context.xml");
-        UserDao dao = applicationContext.getBean("userDao", UserDao.class);
+        UserDao dao = applicationContext.getBean("userDao", UserDaoJdbc.class);
 
 
         User user = new User();
