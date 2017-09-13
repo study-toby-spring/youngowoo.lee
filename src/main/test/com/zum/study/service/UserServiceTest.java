@@ -13,7 +13,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.sun.xml.internal.ws.dump.LoggingDumpTube.Position.Before;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
@@ -74,6 +73,31 @@ public class UserServiceTest {
         else {
             assertThat(fromDao, is(user.getLevel()));
         }
+    }
+
+    @Test
+    public void upgradeAllOrNothing() {
+
+        User texture = users.get(3);
+
+        UserService mock = new TestUserService(texture.getId());
+        mock.setUserDao(userDao);
+
+        userDao.deleteAll();
+
+        for (User user : users)
+            userDao.add(user);
+
+        try {
+
+            mock.upgradeLevels();
+            fail("TestUserServiceException expected");
+        }
+        catch (TestUserServiceException e) {
+
+        }
+
+        checkLevelUpgraded(users.get(1), false);
     }
 
     @Test
