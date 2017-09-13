@@ -3,7 +3,11 @@ package com.zum.study.service;
 import com.zum.study.domain.User;
 import com.zum.study.repository.UserDao;
 import com.zum.study.type.Level;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import javax.sql.DataSource;
@@ -39,10 +43,8 @@ public class UserService {
 
     public void upgradeLevels() throws Exception {
 
-        TransactionSynchronizationManager.initSynchronization();
-
-        Connection connection = DataSourceUtils.getConnection(dataSource);
-        connection.setAutoCommit(false);
+        PlatformTransactionManager manager = new DataSourceTransactionManager(dataSource);
+        TransactionStatus status = manager.getTransaction(new DefaultTransactionDefinition());
 
         try {
 
@@ -54,19 +56,12 @@ public class UserService {
                     upgradeLevel(user);
             }
 
-            connection.commit();
+            manager.commit(status);
         }
         catch (Exception e) {
 
-            connection.rollback();
+            manager.rollback(status);
             throw e;
-        }
-        finally {
-
-            DataSourceUtils.releaseConnection(connection, dataSource);
-
-            TransactionSynchronizationManager.unbindResource(dataSource);
-            TransactionSynchronizationManager.clearSynchronization();
         }
     }
 
