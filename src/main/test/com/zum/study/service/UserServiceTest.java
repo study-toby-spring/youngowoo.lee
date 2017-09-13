@@ -1,8 +1,8 @@
 package com.zum.study.service;
 
-import com.webtoonscorp.spring.domain.User;
-import com.webtoonscorp.spring.repository.UserDao;
-import com.webtoonscorp.spring.type.Level;
+import com.zum.study.domain.User;
+import com.zum.study.repository.UserDao;
+import com.zum.study.type.Level;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sun.xml.internal.ws.dump.LoggingDumpTube.Position.Before;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 

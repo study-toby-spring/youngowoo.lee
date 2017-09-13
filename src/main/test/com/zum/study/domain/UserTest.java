@@ -1,6 +1,6 @@
 package com.zum.study.domain;
 
-import com.webtoonscorp.spring.type.Level;
+import com.zum.study.type.Level;
 import org.junit.Before;
 import org.junit.Test;
 
