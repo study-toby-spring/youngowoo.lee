@@ -23,14 +23,15 @@ public class UserService {
     public static final int MIN_RECOMMEND_FOR_GOLD = 30;
 
     private UserDao userDao;
-    private DataSource dataSource;
+
+    private PlatformTransactionManager manager;
 
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
 
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public void setTransactionManager(PlatformTransactionManager manager) {
+        this.manager = manager;
     }
 
     public void add(User user) {
@@ -43,7 +44,6 @@ public class UserService {
 
     public void upgradeLevels() throws Exception {
 
-        PlatformTransactionManager manager = new DataSourceTransactionManager(dataSource);
         TransactionStatus status = manager.getTransaction(new DefaultTransactionDefinition());
 
         try {
