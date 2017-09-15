@@ -38,9 +38,9 @@ public class UserDaoTest {
 
         users = new ArrayList<User>();
 
-        users.add(new User("1", "joeylee", "123", Level.BASIC, 1, 0));
-        users.add(new User("2", "youngwoo", "456", Level.SILVER, 55, 10));
-        users.add(new User("3", "woo", "789", Level.GOLD, 100, 40));
+        users.add(new User("1", "joeylee", "123","leeyw910205@zuminternet.com", Level.BASIC, 1, 0));
+        users.add(new User("2", "youngwoo", "456","leeyw910205@gmail.com", Level.SILVER, 55, 10));
+        users.add(new User("3", "woo", "789","rkaahs2000@gmail.com", Level.GOLD, 100, 40));
     }
 
     @Test
@@ -75,6 +75,7 @@ public class UserDaoTest {
 
         user.setName("another");
         user.setPassword("password");
+        user.setEmail("leeyw910205@zuminternet.com");
         user.setLevel(Level.GOLD);
         user.setLogin(1000);
         user.setRecommend(999);

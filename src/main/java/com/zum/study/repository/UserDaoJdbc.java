@@ -31,6 +31,7 @@ public class UserDaoJdbc implements UserDao {
             user.setId(result.getString("id"));
             user.setName(result.getString("name"));
             user.setPassword(result.getString("password"));
+            user.setEmail(result.getString("email"));
             user.setLevel(Level.valueOf(result.getInt("level")));
             user.setLogin(result.getInt("login"));
             user.setRecommend(result.getInt("recommend"));
@@ -46,7 +47,7 @@ public class UserDaoJdbc implements UserDao {
 
     public void add(final User user) {
 
-        jdbcTemplate.update("insert into users (id, name, password, level, login, recommend) values (?, ?, ?, ?, ?, ?)", user.getId(), user.getName(), user.getPassword(), user.getLevel().intValue(), user.getLogin(), user.getRecommend());
+        jdbcTemplate.update("insert into users (id, name, password, email, level, login, recommend) values (?, ?, ?, ?, ?, ?, ?)", user.getId(), user.getName(), user.getPassword(), user.getEmail(), user.getLevel().intValue(), user.getLogin(), user.getRecommend());
     }
 
     public List<User> getAll() {
@@ -85,7 +86,7 @@ public class UserDaoJdbc implements UserDao {
 
     public void update(User user) {
 
-        jdbcTemplate.update("update users set name = ?, password = ?, level = ?, login = ?, recommend = ? where id = ?", user.getName(), user.getPassword(), user.getLevel().intValue(), user.getLogin(), user.getRecommend(), user.getId());
+        jdbcTemplate.update("update users set name = ?, password = ?, email = ?, level = ?, login = ?, recommend = ? where id = ?", user.getName(), user.getPassword(), user.getEmail(), user.getLevel().intValue(), user.getLogin(), user.getRecommend(), user.getId());
     }
 }
 
