@@ -5,6 +5,8 @@ import com.zum.study.repository.UserDao;
 import com.zum.study.type.Level;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
@@ -36,6 +38,12 @@ public class UserService {
     private UserDao userDao;
 
     private PlatformTransactionManager manager;
+
+    private MailSender mailSender;
+
+    public void setMailSender(MailSender mailSender) {
+        this.mailSender = mailSender;
+    }
 
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
@@ -85,40 +93,14 @@ public class UserService {
 
     private void sendUpgradeMail(User user) {
 
-        Properties properties = new Properties();
+        SimpleMailMessage message = new SimpleMailMessage();
 
-        // TODO : 보안 설정
-        //
-        // 1. authenticator 계정, 암호 입력
-        //
-        // - 커밋 시 실제 암호가 유출되지 않도록 유의할 것
-        //
-        // 2. 보안 설정 변경
-        //
-        // - Console 에 출력되는 링크로 접속해서 '보안 수준이 낮은 앱에 대한 계정 액세스 변경' 선택 후 'Allow less secure apps' 항목 ON 으로 변경
-        // - TC 수행 후, 제목이 'Review blocked sign-in attempt'인 메일을 수신하면 내용을 열고 허용
-        //
+        message.setTo(user.getEmail());
+        message.setFrom("admin@ksug.org");
+        message.setSubject("Upgrade 안내");
+        message.setText("사용자님의 등급이 " + user.getLevel().name() + " 로 업그레이드 되었습니다.");
 
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "587");
-
-        Session session = Session.getInstance(properties, authenticator);
-        MimeMessage message = new MimeMessage(session);
-
-        try {
-
-            message.setFrom(new InternetAddress("admin@ksug.org"));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(user.getEmail()));
-            message.setSubject("Upgrade 안내");
-            message.setText("사용자님의 등급이 " + user.getLevel().name() + " 로 업그레이드 되었습니다.");
-
-            Transport.send(message);
-
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+        mailSender.send(message);
     }
 
 
