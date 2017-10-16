@@ -21,10 +21,14 @@
     </bean>
 
 
-    <bean name="userService" class="com.zum.study.service.UserService">
+    <bean name="userServiceImpl" class="com.zum.study.service.UserServiceImpl">
         <property name="userDao" ref="userDao"/>
-        <property name="transactionManager" ref="manager"/>
         <property name="mailSender" ref="mailSender"/>
+    </bean>
+
+    <bean name="userService" class="com.zum.study.service.UserServiceTx">
+        <property name="userService" ref="userServiceImpl"/>
+        <property name="transactionManager" ref="manager"/>
     </bean>
 
     <bean name="mailSender" class="com.zum.study.support.mail.MailSenderImpl"/>

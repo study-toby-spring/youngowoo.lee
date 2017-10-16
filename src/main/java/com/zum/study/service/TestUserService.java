@@ -5,7 +5,7 @@ import com.zum.study.domain.User;
 /**
  * Created by Joeylee on 2017-09-13.
  */
-public class TestUserService extends UserService {
+public class TestUserService extends UserServiceImpl {
 
     private String id;
 

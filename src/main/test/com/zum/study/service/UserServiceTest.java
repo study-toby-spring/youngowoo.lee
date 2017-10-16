@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
 public class UserServiceTest {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
     private UserDao userDao;
@@ -86,10 +86,15 @@ public class UserServiceTest {
 
         User texture = users.get(3);
 
-        UserService mock = new TestUserService(texture.getId());
+        TestUserService mock = new TestUserService(texture.getId());
 
         mock.setUserDao(userDao);
-        mock.setTransactionManager(manager);
+        mock.setMailSender(new TestMailSender());
+
+        UserServiceTx txUserService = new UserServiceTx();
+
+        txUserService.setTransactionManager(manager);
+        txUserService.setUserService(mock);
 
         userDao.deleteAll();
 
@@ -98,7 +103,7 @@ public class UserServiceTest {
 
         try {
 
-            mock.upgradeLevels();
+            txUserService.upgradeLevels();
             fail("TestUserServiceException expected");
         }
         catch (TestUserServiceException e) {
