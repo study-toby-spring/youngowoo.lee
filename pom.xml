@@ -37,7 +37,36 @@
 
 
   </dependencies>
+
+  <profiles>
+    <profile>
+      <id>dev</id>
+      <properties>
+        <env>dev</env>
+      </properties>
+    </profile>
+    <profile>
+      <id>real</id>
+      <properties>
+        <flavor>real</flavor>
+      </properties>
+    </profile>
+  </profiles>
+
   <build>
     <finalName>study</finalName>
+    <resources>
+
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+
+      <resource>
+        <directory>src/main/resources-${env}</directory>
+      </resource>
+
+    </resources>
   </build>
+
+
 </project>
