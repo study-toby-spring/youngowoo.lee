@@ -1,7 +1,9 @@
 package com.zum.study.service;
 
 import com.zum.study.domain.User;
+import com.zum.study.repository.TestUserDao;
 import com.zum.study.repository.UserDao;
+import com.zum.study.support.mail.TestMailSender;
 import com.zum.study.type.Level;
 import org.junit.Before;
 import org.junit.Test;
@@ -55,18 +57,34 @@ public class UserServiceTest {
     @Test
     public void upgradeLevels() throws Exception {
 
-        userDao.deleteAll();
+        TestMailSender mailSender = new TestMailSender();
+        TestUserDao userDao = new TestUserDao(this.users);
 
-        for (User user : users)
-            userDao.add(user);
+        userService = new UserServiceImpl();
+
+        userService.setUserDao(userDao);
+        userService.setMailSender(mailSender);
 
         userService.upgradeLevels();
 
-        checkLevelUpgraded(users.get(0), false);
-        checkLevelUpgraded(users.get(1), true);
-        checkLevelUpgraded(users.get(2), false);
-        checkLevelUpgraded(users.get(3), true);
-        checkLevelUpgraded(users.get(4), false);
+        List<User> updated = userDao.getUpdated();
+
+        assertThat(updated.size(), is(2));
+
+        checkUserAndLevel(users.get(0), "a", Level.BASIC);
+        checkUserAndLevel(users.get(1), "b", Level.SILVER);
+
+        List<String> requests = mailSender.getRequests();
+
+        assertThat(requests.size(), is(2));
+        assertThat(requests.get(0), is(users.get(1).getEmail()));
+        assertThat(requests.get(1), is(users.get(3).getEmail()));
+    }
+
+    private void checkUserAndLevel(User user, String name, Level level) {
+
+        assertThat(user.getName(), is(name));
+        assertThat(user.getLevel(), is(level));
     }
 
     private void checkLevelUpgraded(User user, boolean upgraded) {
