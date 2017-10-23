@@ -26,10 +26,13 @@
         <property name="mailSender" ref="mailSender"/>
     </bean>
 
-    <bean name="userService" class="com.zum.study.service.UserServiceTx">
-        <property name="userService" ref="userServiceImpl"/>
-        <property name="transactionManager" ref="manager"/>
+    <bean name="userService" class="com.zum.study.support.transaction.TransactionProxyFactoryBean">
+        <property name="target" ref="userServiceImpl"/>
+        <property name="manager" ref="manager"/>
+        <property name="pattern" value="upgradeLevels"/>
+        <property name="serviceInterface" value="com.zum.study.service.UserService"/>
     </bean>
+
 
     <bean name="mailSender" class="com.zum.study.support.mail.MailSenderImpl"/>
 

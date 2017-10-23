@@ -11,8 +11,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -40,6 +42,9 @@ public class UserServiceTest {
 
     @Autowired
     private PlatformTransactionManager manager;
+
+    @Autowired
+    private ApplicationContext context;
 
     List<User> users;
 
@@ -141,11 +146,12 @@ public class UserServiceTest {
     }
 
     @Test
+    @DirtiesContext
     public void upgradeAllOrNothing() throws Exception {
 
-        User texture = users.get(3);
+        User target = users.get(3);
 
-        TestUserService mock = new TestUserService(texture.getId());
+        TestUserService mock = new TestUserService(target.getId());
         TransactionHandler handler = new TransactionHandler();
 
         handler.setTarget(mock);
