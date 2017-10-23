@@ -4,6 +4,7 @@ import com.zum.study.domain.User;
 import com.zum.study.repository.TestUserDao;
 import com.zum.study.repository.UserDao;
 import com.zum.study.support.mail.TestMailSender;
+import com.zum.study.support.transaction.TransactionHandler;
 import com.zum.study.type.Level;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,6 +21,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import static org.mockito.Mockito.*;
 
 import javax.sql.DataSource;
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -144,14 +146,16 @@ public class UserServiceTest {
         User texture = users.get(3);
 
         TestUserService mock = new TestUserService(texture.getId());
+        TransactionHandler handler = new TransactionHandler();
+
+        handler.setTarget(mock);
+        handler.setPattern("upgradeLevels");
+        handler.setManager(manager);
 
         mock.setUserDao(userDao);
         mock.setMailSender(new TestMailSender());
 
-        UserServiceTx txUserService = new UserServiceTx();
-
-        txUserService.setTransactionManager(manager);
-        txUserService.setUserService(mock);
+        UserService userService = (UserService) Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(), new Class[] { UserService.class }, handler);
 
         userDao.deleteAll();
 
@@ -160,7 +164,7 @@ public class UserServiceTest {
 
         try {
 
-            txUserService.upgradeLevels();
+            userService.upgradeLevels();
             fail("TestUserServiceException expected");
         }
         catch (TestUserServiceException e) {
