@@ -33,5 +33,9 @@
 
     <bean name="mailSender" class="com.zum.study.support.mail.MailSenderImpl"/>
 
+    <bean name="message" class="com.zum.study.factory.MessageFactoryBean">
+        <property name="text" value="yougnwoo"/>
+    </bean>
+
 
 </beans>
