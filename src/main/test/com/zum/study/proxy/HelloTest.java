@@ -1,6 +1,7 @@
 package com.zum.study.proxy;
 
 import org.junit.Test;
+import org.springframework.aop.framework.ProxyFactoryBean;
 
 import java.lang.reflect.Proxy;
 
@@ -45,4 +46,20 @@ public class HelloTest {
         assertThat(target.sayHi("youngwoo"), is("HI, youngwoo"));
         assertThat(target.sayThankYou("youngwoo"), is("THANK YOU, youngwoo"));
     }
+
+    @Test
+    public void proxyFactoryBean() {
+
+        ProxyFactoryBean bean = new ProxyFactoryBean();
+
+        bean.setTarget(new HelloTarget());
+        bean.addAdvice(new HelloAdvice());
+
+        Hello proxy = (Hello) bean.getObject();
+
+        assertThat(proxy.sayHello("youngwoo"), is("HELLO, YOUNGWOO"));
+        assertThat(proxy.sayHi("youngwoo"), is("HI, YOUNGWOO"));
+        assertThat(proxy.sayThankYou("youngwoo"), is("THANK YOU, YOUNGWOO"));
+    }
+
 }
