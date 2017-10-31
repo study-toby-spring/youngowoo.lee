@@ -21,24 +21,18 @@
     </bean>
 
 
-    <bean name="userServiceImpl" class="com.zum.study.service.UserServiceImpl">
+    <bean name="userService" class="com.zum.study.service.UserServiceImpl">
         <property name="userDao" ref="userDao"/>
-        <property name="mailSender" ref="mailSender"/>
-    </bean>
-
-    <bean name="userService" class="org.springframework.aop.framework.ProxyFactoryBean">
-        <property name="target" ref="userServiceImpl"/>
-        <property name="interfaces" value="com.zum.study.service.UserService"/>
-        <property name="interceptorNames">
-            <list>
-                <value>transactionAdvisor</value>
-            </list>
-        </property>
+        <property name="mailSender" ref="testMailSender"/>
 
     </bean>
 
+    <bean name="testUserService" class="com.zum.study.service.UserServiceTest$TestUserServiceImpl" parent="userService"/>
 
     <bean name="mailSender" class="com.zum.study.support.mail.MailSenderImpl"/>
+
+    <bean name="testMailSender" class="com.zum.study.support.mail.TestMailSender"/>
+
 
     <bean name="message" class="com.zum.study.factory.MessageFactoryBean">
         <property name="text" value="yougnwoo"/>
@@ -48,7 +42,8 @@
         <property name="manager" ref="manager"/>
     </bean>
 
-    <bean name="transactionPointcut" class="org.springframework.aop.support.NameMatchMethodPointcut">
+    <bean name="transactionPointcut" class="com.zum.study.aop.DualPointcut">
+        <property name="mappedClassName" value="*ServiceImpl"/>
         <property name="mappedName" value="upgrade*"/>
     </bean>
 

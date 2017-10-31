@@ -36,18 +36,29 @@ import static org.junit.Assert.*;
 public class UserServiceTest {
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
+
+    @Autowired
+    private UserService testUserService;
 
     @Autowired
     private UserDao userDao;
 
-    @Autowired
-    private PlatformTransactionManager manager;
-
-    @Autowired
-    private ApplicationContext context;
-
     List<User> users;
+
+
+    static class TestUserServiceImpl extends UserServiceImpl {
+
+        @Override
+        protected void upgradeLevel(User user) {
+
+            if (user.getId().equals("2")) {
+                throw new TestUserServiceException();
+            }
+
+            user.upgradeLevel();
+        }
+    }
 
     @Before
     public void setup() {
@@ -107,7 +118,8 @@ public class UserServiceTest {
         TestMailSender mailSender = new TestMailSender();
         TestUserDao userDao = new TestUserDao(this.users);
 
-        userService = new UserServiceImpl();
+        UserServiceImpl userService = new UserServiceImpl();
+
 
         userService.setUserDao(userDao);
         userService.setMailSender(mailSender);
@@ -147,25 +159,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @DirtiesContext
     public void upgradeAllOrNothing() throws Exception {
-
-        User target = users.get(3);
-
-        TestUserService mock = new TestUserService(target.getId());
-        TransactionHandler handler = new TransactionHandler();
-
-        handler.setTarget(mock);
-        handler.setPattern("upgradeLevels");
-        handler.setManager(manager);
-
-        mock.setUserDao(userDao);
-        mock.setMailSender(new TestMailSender());
-
-        ProxyFactoryBean bean = context.getBean("&userService", ProxyFactoryBean.class);
-        bean.setTarget(mock);
-
-        UserService userService = (UserService) bean.getObject();
 
         userDao.deleteAll();
 
@@ -174,7 +168,8 @@ public class UserServiceTest {
 
         try {
 
-            userService.upgradeLevels();
+            testUserService.upgradeLevels();
+
             fail("TestUserServiceException expected");
         }
         catch (TestUserServiceException e) {
