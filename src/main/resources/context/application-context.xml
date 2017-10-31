@@ -26,11 +26,15 @@
         <property name="mailSender" ref="mailSender"/>
     </bean>
 
-    <bean name="userService" class="com.zum.study.support.transaction.TransactionProxyFactoryBean">
+    <bean name="userService" class="org.springframework.aop.framework.ProxyFactoryBean">
         <property name="target" ref="userServiceImpl"/>
-        <property name="manager" ref="manager"/>
-        <property name="pattern" value="upgradeLevels"/>
-        <property name="serviceInterface" value="com.zum.study.service.UserService"/>
+        <property name="interfaces" value="com.zum.study.service.UserService"/>
+        <property name="interceptorNames">
+            <list>
+                <value>transactionAdvisor</value>
+            </list>
+        </property>
+
     </bean>
 
 
@@ -39,6 +43,20 @@
     <bean name="message" class="com.zum.study.factory.MessageFactoryBean">
         <property name="text" value="yougnwoo"/>
     </bean>
+
+    <bean name="transactionAdvice" class="com.zum.study.support.transaction.TransactionAdvice">
+        <property name="manager" ref="manager"/>
+    </bean>
+
+    <bean name="transactionPointcut" class="org.springframework.aop.support.NameMatchMethodPointcut">
+        <property name="mappedName" value="upgrade*"/>
+    </bean>
+
+    <bean name="transactionAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+        <property name="advice" ref="transactionAdvice"/>
+        <property name="pointcut" ref="transactionPointcut"/>
+    </bean>
+
 
 
 </beans>
