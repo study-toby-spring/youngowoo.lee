@@ -48,9 +48,17 @@
         <property name="text" value="yougnwoo"/>
     </bean>
 
-    <bean name="transactionAdvice" class="com.zum.study.support.transaction.TransactionAdvice">
-        <property name="manager" ref="manager"/>
+    <bean name="transactionAdvice" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+        <property name="transactionManager" ref="manager"/>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="get*">PROPAGATION_REQUIRED,readOnly,timeout_30</prop>
+                <prop key="upgrade*">PROPAGATION_REQUIRES_NEW,ISOLATION_SERIALIZABLE</prop>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
     </bean>
+
 
     <bean name="transactionPointcut" class="com.zum.study.aop.DualPointcut">
         <property name="mappedClassName" value="*ServiceImpl"/>
