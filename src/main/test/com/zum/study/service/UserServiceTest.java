@@ -22,6 +22,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import static org.mockito.Mockito.*;
@@ -131,20 +132,13 @@ public class UserServiceTest {
     }
 
     @Test
+    @Transactional
     public void transactionSync() {
 
-        TransactionStatus status = manager.getTransaction(new DefaultTransactionDefinition());
+        userService.deleteAll();
 
-        try {
-
-            userService.deleteAll();
-
-            userService.add(users.get(0));
-            userService.add(users.get(1));
-        }
-        finally {
-            manager.rollback(status);
-        }
+        userService.add(users.get(0));
+        userService.add(users.get(1));
 
     }
 
