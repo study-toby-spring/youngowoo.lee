@@ -1,6 +1,6 @@
-package com.webtoonscorp.spring.service;
+package com.zum.study.service;
 
-import com.webtoonscorp.spring.exception.SqlRetrievalFailureException;
+import com.zum.study.exception.SqlRetrievalFailureException;
 
 import java.util.Map;
 
