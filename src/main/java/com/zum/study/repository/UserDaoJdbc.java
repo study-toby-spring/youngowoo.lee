@@ -1,6 +1,7 @@
 package com.zum.study.repository;
 
 import com.zum.study.domain.User;
+import com.zum.study.service.SqlService;
 import com.zum.study.type.Level;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -21,7 +22,7 @@ import java.util.Map;
  */
 public class UserDaoJdbc implements UserDao {
 
-    private Map<String, String> sqlMap;
+    private SqlService sqlService;
 
     private JdbcTemplate jdbcTemplate;
 
@@ -48,27 +49,24 @@ public class UserDaoJdbc implements UserDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public void setSqlMap(Map<String, String> sqlMap) {
+    public void setSqlService(SqlService sqlService) {
 
-        this.sqlMap = sqlMap;
+        this.sqlService = sqlService;
     }
 
     public void add(final User user) {
 
-        jdbcTemplate.update(this.sqlMap.get("add"), user.getId(), user.getName(), user.getPassword(), user.getEmail(), user.getLevel().intValue(), user.getLogin(), user.getRecommend());
-
+        jdbcTemplate.update(this.sqlService.getSql("add"), user.getId(), user.getName(), user.getPassword(), user.getEmail(), user.getLevel().intValue(), user.getLogin(), user.getRecommend());
     }
 
     public List<User> getAll() {
 
-        return jdbcTemplate.query(this.sqlMap.get("getAll"), mapper);
-
+        return jdbcTemplate.query(this.sqlService.getSql("getAll"), mapper);
     }
 
     public User get(String id) {
 
-        return jdbcTemplate.queryForObject(this.sqlMap.get("get"), new Object[] { id }, mapper);
-
+        return jdbcTemplate.queryForObject(this.sqlService.getSql("get"), new Object[] { id }, mapper);
     }
 
     public int getCount() {
@@ -77,8 +75,7 @@ public class UserDaoJdbc implements UserDao {
                 new PreparedStatementCreator() {
 
                     public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                        return connection.prepareStatement(UserDaoJdbc.this.sqlMap.get("getCount"));
-
+                        return connection.prepareStatement(UserDaoJdbc.this.sqlService.getSql("getCount"));
                     }
                 },
                 new ResultSetExtractor<Integer>() {
@@ -93,14 +90,12 @@ public class UserDaoJdbc implements UserDao {
 
     public void deleteAll() {
 
-        jdbcTemplate.update(this.sqlMap.get("deleteAll"));
-
+        jdbcTemplate.update(this.sqlService.getSql("deleteAll"));
     }
 
     public void update(User user) {
 
-        jdbcTemplate.update(this.sqlMap.get("update"), user.getName(), user.getPassword(), user.getEmail(), user.getLevel().intValue(), user.getLogin(), user.getRecommend(), user.getId());
-
+        jdbcTemplate.update(this.sqlService.getSql("update"), user.getName(), user.getPassword(), user.getEmail(), user.getLevel().intValue(), user.getLogin(), user.getRecommend(), user.getId());
     }
 }
 
