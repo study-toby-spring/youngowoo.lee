@@ -4,6 +4,7 @@ import com.zum.study.exception.SqlRetrievalFailureException;
 import com.zum.study.jaxb.SqlType;
 import com.zum.study.jaxb.Sqlmap;
 
+import javax.annotation.PostConstruct;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -16,9 +17,22 @@ import java.util.Map;
  */
 public class XmlSqlService implements SqlService {
 
+    private String sqlMapFile;
+
     private Map<String, String> map = new HashMap<String, String>();
 
-    public XmlSqlService() {
+    public String getSqlMapFile() {
+
+        return this.sqlMapFile;
+    }
+
+    public void setSqlMapFile(String sqlMapFile) {
+
+        this.sqlMapFile = sqlMapFile;
+    }
+
+    @PostConstruct
+    public void load() {
 
         try {
 
@@ -27,7 +41,7 @@ public class XmlSqlService implements SqlService {
 
             Unmarshaller unmarshaller = context.createUnmarshaller();
 
-            InputStream stream = getClass().getResourceAsStream("/sql/sqlmap.xml");
+            InputStream stream = getClass().getResourceAsStream(getSqlMapFile());
             Sqlmap sqlmap = (Sqlmap) unmarshaller.unmarshal(stream);
 
             for (SqlType type : sqlmap.getSql()) {

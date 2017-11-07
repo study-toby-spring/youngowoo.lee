@@ -7,7 +7,9 @@
 
 
 
-<context:property-placeholder location="classpath*:property/*.properties"/>
+    <context:property-placeholder location="classpath*:property/*.properties"/>
+    <context:annotation-config/>
+
     <tx:annotation-driven transaction-manager="manager"/>
 
     <bean name="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
@@ -28,20 +30,10 @@
         <property name="sqlService" ref="sqlService"/>
     </bean>
 
-    <bean name="sqlService" class="com.zum.study.service.sql.SimpleSqlService">
 
-    <property name="sqlMap">
 
-            <map>
-                <entry key="add" value="insert into users (id, name, password, email, level, login, recommend) values (?, ?, ?, ?, ?, ?, ?)"/>
-                <entry key="get" value="select * from users where id = ?"/>
-                <entry key="getAll" value="select * from users order by id"/>
-                <entry key="getCount" value="select count(*) from users"/>
-                <entry key="deleteAll" value="delete from users"/>
-                <entry key="update" value="update users set name = ?, password = ?, email = ?, level = ?, login = ?, recommend = ? where id = ?"/>
-            </map>
-        </property>
-
+    <bean name="sqlService" class="com.zum.study.service.sql.XmlSqlService">
+        <property name="sqlMapFile" value="/sql/sqlmap.xml"/>
     </bean>
 
 
