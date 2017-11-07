@@ -1,7 +1,7 @@
 package com.zum.study.repository;
 
 import com.zum.study.domain.User;
-import com.zum.study.service.SqlService;
+import com.zum.study.service.sql.SqlService;
 import com.zum.study.type.Level;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,7 +15,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Joeylee on 2017-09-13.

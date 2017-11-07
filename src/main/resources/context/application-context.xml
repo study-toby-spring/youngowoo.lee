@@ -28,7 +28,7 @@
         <property name="sqlService" ref="sqlService"/>
     </bean>
 
-    <bean name="sqlService" class="com.zum.study.service.SimpleSqlService">
+    <bean name="sqlService" class="com.zum.study.service.sql.SimpleSqlService">
 
     <property name="sqlMap">
 

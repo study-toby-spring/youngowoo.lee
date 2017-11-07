@@ -1,4 +1,4 @@
-package com.zum.study.service;
+package com.zum.study.service.sql;
 
 import com.zum.study.exception.SqlRetrievalFailureException;
 
