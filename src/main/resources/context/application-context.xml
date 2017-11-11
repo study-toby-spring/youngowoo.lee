@@ -34,6 +34,9 @@
 
     <bean name="sqlService" class="com.zum.study.service.sql.XmlSqlService">
         <property name="sqlMapFile" value="/sql/sqlmap.xml"/>
+        <property name="sqlRegistry" ref="sqlService"/>
+        <property name="sqlReader" ref="sqlService"/>
+
     </bean>
 
 
