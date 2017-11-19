@@ -16,6 +16,8 @@
     <javax-mail-version>1.4.7</javax-mail-version>
     <junit-version>4.12</junit-version>
     <mockito-version>2.9.0</mockito-version>
+    <castor-version>1.4.1</castor-version>
+
 
   </properties>
 
@@ -77,6 +79,12 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-oxm</artifactId>
       <version>${spring-version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.codehaus.castor</groupId>
+      <artifactId>castor-xml</artifactId>
+      <version>${castor-version}</version>
     </dependency>
 
   </dependencies>
