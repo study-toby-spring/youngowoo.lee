@@ -32,9 +32,9 @@
 
 
 
-    <bean name="sqlService" class="com.webtoonscorp.spring.service.sql.service.DefaultSqlService"/>
-
-
+    <bean name="sqlService" class="com.zum.study.service.sql.service.OxmSqlService">
+        <property name="unmarshaller" ref="unmarshaller"/>
+    </bean>
 
     <bean name="userService" class="com.zum.study.service.UserServiceImpl">
         <property name="userDao" ref="userDao"/>
