@@ -15,6 +15,8 @@ import java.io.IOException;
 
 public class OxmSqlService implements SqlService {
 
+    private BaseSqlService sqlService = new BaseSqlService();
+
     private SqlRegistry registry = new HashMapSqlRegistry();
 
     public void setSqlRegistry(SqlRegistry registry) {
@@ -83,8 +85,11 @@ public class OxmSqlService implements SqlService {
 
     @PostConstruct
     public void initialize() {
+        sqlService.setSqlRegistry(registry);
+        sqlService.setSqlReader(reader);
 
-        reader.load(registry);
+        sqlService.initialize();
+
     }
 
     public String getSql(String key) throws SqlRetrievalFailureException {
