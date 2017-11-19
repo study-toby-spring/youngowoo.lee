@@ -59,6 +59,10 @@
         <property name="mappedName" value="upgrade*"/>
     </bean>
 
+    <bean id="unmarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+        <property name="contextPath" value="com.zum.study.jaxb"/>
+    </bean>
+
 
 
 </beans>
