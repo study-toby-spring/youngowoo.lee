@@ -34,6 +34,8 @@
 
     <bean name="sqlService" class="com.zum.study.service.sql.service.OxmSqlService">
         <property name="unmarshaller" ref="unmarshaller"/>
+        <property name="sqlMap" value="classpath:/sql/sqlmap.xml"/>
+
     </bean>
 
     <bean name="userService" class="com.zum.study.service.UserServiceImpl">
