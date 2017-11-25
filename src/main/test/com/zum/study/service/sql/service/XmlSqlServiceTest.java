@@ -1,6 +1,7 @@
 package com.zum.study.service.sql.service;
 
 import com.zum.study.configuration.SpringPracticeConfiguration;
+import com.zum.study.configuration.SqlServiceConfiguration;
 import com.zum.study.service.sql.service.SqlService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +13,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = SpringPracticeConfiguration.class)
+@ContextConfiguration(classes = {SqlServiceConfiguration.class})
+
 public class XmlSqlServiceTest {
 
     @Autowired

@@ -49,9 +49,6 @@ public class UserServiceTest {
     @Autowired
     private UserDao userDao;
 
-    @Autowired
-    private PlatformTransactionManager manager;
-
 
     List<User> users;
 
