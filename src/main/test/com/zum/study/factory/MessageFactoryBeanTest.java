@@ -4,7 +4,6 @@ package com.zum.study.factory;
  * Created by Joeylee on 2017-10-23.
  */
 import com.zum.study.configuration.SpringPracticeConfiguration;
-import com.zum.study.configuration.SpringPracticeTestConfiguration;
 import com.zum.study.domain.Message;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +18,8 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("test")
-@ContextConfiguration(classes = { SpringPracticeConfiguration.class, SpringPracticeTestConfiguration.class })
+@ContextConfiguration(classes = { SpringPracticeConfiguration.class })
+
 public class MessageFactoryBeanTest {
 
     @Autowired

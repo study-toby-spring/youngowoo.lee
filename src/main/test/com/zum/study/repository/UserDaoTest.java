@@ -1,7 +1,6 @@
 package com.zum.study.repository;
 
 import com.zum.study.configuration.SpringPracticeConfiguration;
-import com.zum.study.configuration.SpringPracticeTestConfiguration;
 import com.zum.study.domain.User;
 import com.zum.study.type.Level;
 import org.junit.Before;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
 import org.springframework.jdbc.support.SQLExceptionTranslator;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -24,6 +24,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringPracticeConfiguration.class)
+@ActiveProfiles("test")
 
 public class UserDaoTest {
 

@@ -13,16 +13,14 @@ import com.zum.study.service.sql.service.OxmSqlService;
 import com.zum.study.service.sql.service.SqlService;
 import com.zum.study.support.mail.TestMailSender;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.*;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.mail.MailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.oxm.Unmarshaller;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -33,8 +31,49 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan(basePackages = "com.zum.study")
-@Import({ SqlServiceConfiguration.class, SpringPracticeProductionConfiguration.class, SpringPracticeTestConfiguration.class })
+@Import({ SqlServiceConfiguration.class })
 public class SpringPracticeConfiguration {
+
+
+    @Configuration
+    @Profile("test")
+    public class SpringPracticeTestConfiguration {
+
+        @Bean
+        public UserService testUserService() {
+            return new TestUserServiceImpl();
+        }
+
+        @Bean
+        public MailSender mailSender() {
+            return new TestMailSender();
+        }
+
+        @Bean
+        public MessageFactoryBean message() {
+
+            MessageFactoryBean bean = new MessageFactoryBean();
+            bean.setText("youngwoo");
+
+            return bean;
+        }
+    }
+
+    @Configuration
+    @Profile("production")
+    public class SpringPracticeProductionConfiguration {
+
+        @Bean
+        public MailSender mailSender() {
+
+            JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+            mailSender.setHost("localhost");
+
+            return mailSender;
+        }
+    }
+
+
 
     @Bean
     public DataSource dataSource() {
