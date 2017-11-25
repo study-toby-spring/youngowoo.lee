@@ -1,4 +1,4 @@
-package com.zum.study.service.sql;
+package com.zum.study.service.sql.service;
 
 import com.zum.study.service.sql.service.SqlService;
 import org.junit.Test;
