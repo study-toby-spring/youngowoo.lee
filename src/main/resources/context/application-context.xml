@@ -34,6 +34,7 @@
 
     <bean name="sqlService" class="com.zum.study.service.sql.service.OxmSqlService">
         <property name="unmarshaller" ref="unmarshaller"/>
+        <property name="sqlRegistry" ref="sqlRegistry"/>
         <property name="sqlMap" value="classpath:/sql/sqlmap.xml"/>
 
     </bean>
@@ -65,6 +66,7 @@
         <property name="mappingLocation" value="/sql/mapping.xml"/>
     </bean>
 
+    <bean id="sqlRegistry" class="com.zum.study.service.sql.registry.UpdatableHashMapSqlRegistry"/>
 
 
 </beans>
