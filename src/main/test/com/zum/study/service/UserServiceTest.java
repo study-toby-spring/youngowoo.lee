@@ -1,5 +1,6 @@
 package com.zum.study.service;
 
+import com.zum.study.configuration.SpringPracticeConfiguration;
 import com.zum.study.domain.User;
 import com.zum.study.repository.TestUserDao;
 import com.zum.study.repository.UserDao;
@@ -36,7 +37,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/context/application-context.xml")
+@ContextConfiguration(classes = SpringPracticeConfiguration.class)
 public class UserServiceTest {
 
     @Autowired

@@ -51,7 +51,7 @@
 
     </bean>
 
-    <bean name="testUserService" class="com.zum.study.service.UserServiceTest$TestUserServiceImpl" parent="userService"/>
+    <bean name="testUserService" class="com.zum.study.service.TestUserServiceImpl" parent="userService"/>
 
     <bean name="mailSender" class="com.zum.study.support.mail.MailSenderImpl"/>
 

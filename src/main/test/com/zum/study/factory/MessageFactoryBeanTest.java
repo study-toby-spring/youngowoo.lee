@@ -1,5 +1,9 @@
 package com.zum.study.factory;
 
+/**
+ * Created by Joeylee on 2017-10-23.
+ */
+import com.zum.study.configuration.SpringPracticeConfiguration;
 import com.zum.study.domain.Message;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,13 +13,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
-/**
- * Created by Joeylee on 2017-10-23.
- */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/context/application-context.xml")
+@ContextConfiguration(classes = SpringPracticeConfiguration.class)
 public class MessageFactoryBeanTest {
 
     @Autowired

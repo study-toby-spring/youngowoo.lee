@@ -1,5 +1,6 @@
 package com.zum.study.oxm;
 
+import com.zum.study.configuration.SpringPracticeConfiguration;
 import com.zum.study.jaxb.SqlType;
 import com.zum.study.jaxb.Sqlmap;
 import org.junit.Test;
@@ -20,7 +21,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:/context/application-context.xml")
+@ContextConfiguration(classes = SpringPracticeConfiguration.class)
 public class OxmTest {
 
     @Autowired

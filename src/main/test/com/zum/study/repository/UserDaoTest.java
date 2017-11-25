@@ -1,5 +1,6 @@
 package com.zum.study.repository;
 
+import com.zum.study.configuration.SpringPracticeConfiguration;
 import com.zum.study.domain.User;
 import com.zum.study.type.Level;
 import org.junit.Before;
@@ -21,7 +22,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:/context/application-context.xml")
+@ContextConfiguration(classes = SpringPracticeConfiguration.class)
 public class UserDaoTest {
 
     @Autowired
