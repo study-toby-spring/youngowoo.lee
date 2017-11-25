@@ -12,7 +12,9 @@ import com.zum.study.service.sql.registry.SqlRegistry;
 import com.zum.study.service.sql.service.OxmSqlService;
 import com.zum.study.service.sql.service.SqlService;
 import com.zum.study.support.mail.TestMailSender;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
@@ -27,9 +29,14 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
+@ComponentScan(basePackages = "com.zum.study")
 @Configuration
 @EnableTransactionManagement
 public class SpringPracticeConfiguration {
+
+
+    @Autowired
+    private UserDao userDao;
 
     @Bean
     public DataSource dataSource() {
@@ -54,29 +61,11 @@ public class SpringPracticeConfiguration {
     }
 
     @Bean
-    public UserDao userDao() {
-
-        return new UserDaoJdbc();
-
-    }
-
-    @Bean
-    public UserService userService() {
-
-        UserServiceImpl userService = new UserServiceImpl();
-
-        userService.setUserDao(userDao());
-        userService.setMailSender(mailSender());
-
-        return userService;
-    }
-
-    @Bean
     public UserService testUserService() {
 
         TestUserServiceImpl testUserService = new TestUserServiceImpl();
 
-        testUserService.setUserDao(userDao());
+        testUserService.setUserDao(userDao);
         testUserService.setMailSender(mailSender());
 
         return testUserService;

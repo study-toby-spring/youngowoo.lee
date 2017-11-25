@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -20,6 +21,7 @@ import java.util.List;
 /**
  * Created by Joeylee on 2017-09-13.
  */
+@Repository("userDao")
 public class UserDaoJdbc implements UserDao {
 
     @Autowired

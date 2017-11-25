@@ -3,21 +3,25 @@ package com.zum.study.service;
 import com.zum.study.domain.User;
 import com.zum.study.repository.UserDao;
 import com.zum.study.type.Level;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by Joeylee on 2017-10-17.
  */
+@Service("userService")
 public class UserServiceImpl implements UserService{
 
     public static final int MIN_LOG_COUNT_FOR_SILVER = 50;
     public static final int MIN_RECOMMEND_FOR_GOLD = 30;
 
-
+    @Autowired
     private UserDao userDao;
+    @Autowired
     private MailSender mailSender;
 
     public void setMailSender(MailSender mailSender) {
