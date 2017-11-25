@@ -23,7 +23,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { SpringPracticeConfiguration.class, SpringPracticeTestConfiguration.class })
+@ContextConfiguration(classes = SpringPracticeConfiguration.class)
 
 public class UserDaoTest {
 

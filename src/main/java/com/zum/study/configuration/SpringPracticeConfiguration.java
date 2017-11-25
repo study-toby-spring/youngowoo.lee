@@ -33,7 +33,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan(basePackages = "com.zum.study")
-@Import(SqlServiceConfiguration.class)
+@Import({ SqlServiceConfiguration.class, SpringPracticeProductionConfiguration.class, SpringPracticeTestConfiguration.class })
 public class SpringPracticeConfiguration {
 
     @Bean
